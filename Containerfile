@@ -7,33 +7,16 @@ RUN sed -i '/^tsflags=nodocs/d' /etc/dnf/dnf.conf
 # Setup containers for podman/buildah
 RUN dnf -y install \
         systemd \
-        dbus-broker \
         sudo \
         podman \
         buildah \
-        skopeo \
-        crun \
-        fuse-overlayfs \
-        slirp4netns \
-        passt \
-        procps-ng \
-        iproute \
-        which \
-        vim-enhanced \
-        git \
-        unzip \
-        openssh-clients \
-        bash-completion \
-        man-db \
-        man-pages \
-        glibc-langpack-en \
-        dnf-plugins-core && \
+        passt && \
     dnf clean all && rm -rf /var/cache/dnf
  
 # User with passwordless sudo + subordinate IDs for rootless podman
 RUN useradd -m -G wheel -s /bin/bash "dan" && \
-    echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USERNAME}" && \
-    chmod 0440 "/etc/sudoers.d/${USERNAME}" && \
+    echo "dan ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/dan && \
+    chmod 0440 "/etc/sudoers.d/dan" && \
     { grep -q "^dan:" /etc/subuid || echo "dan:100000:65536" >> /etc/subuid; } && \
     { grep -q "^dan:" /etc/subgid || echo "dan:100000:65536" >> /etc/subgid; }
  
