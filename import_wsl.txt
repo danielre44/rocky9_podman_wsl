@@ -1,0 +1,4 @@
+
+wsl --import rocky9_podman_wsl C:\Users\dan\rocky9_podman_wsl ".\rocky9_podman_wsl.tar" --version 2
+wsl --shutdown
+wsl -d rocky9_podman_wsl
