@@ -4,13 +4,18 @@ FROM docker.io/library/rockylinux:9 AS rocky9_podman_wsl
 # Allow container image docs
 RUN sed -i '/^tsflags=nodocs/d' /etc/dnf/dnf.conf
 
-# Setup containers for podman/buildah
+# Install packages
 RUN dnf -y install \
+    # Required for podman/buildah \
         systemd \
         sudo \
         podman \
         buildah \
-        passt && \
+        passt \
+    # Additional packages \
+        tmux \
+        git \
+        && \
     dnf clean all && rm -rf /var/cache/dnf
  
 # User with passwordless sudo + subordinate IDs for rootless podman
