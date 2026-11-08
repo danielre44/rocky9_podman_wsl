@@ -13,10 +13,12 @@ RUN dnf -y install \
         buildah \
         passt \
     # Additional packages \
+        vim \
         tmux \
         git \
         && \
-    dnf clean all && rm -rf /var/cache/dnf
+    dnf clean all && \
+    rm -rf /var/cache/dnf
  
 # User with passwordless sudo + subordinate IDs for rootless podman
 RUN useradd -m -G wheel -s /bin/bash "dan" && \
